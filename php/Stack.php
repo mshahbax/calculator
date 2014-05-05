@@ -1,4 +1,7 @@
 <?php
+/**
+ *  Stack class push/pop/poke the elements to stack array
+ */
 class Stack {
  
     protected $data = array();

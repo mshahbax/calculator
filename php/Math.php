@@ -69,7 +69,13 @@ class Math {
         }
         throw new RuntimeException('Could not render output');
     }
- 
+ /**
+  * 
+  * @param TerminalExpression $expression Pass through expression terminal and check the precidence
+  * @param Stack $output List of operations to perform
+  * @param Stack $operators List of Operations to check
+  * @throws RuntimeException Through exception on mssing of a parenthesis
+  */
     protected function parseParenthesis(TerminalExpression $expression, Stack $output, Stack $operators) {
         if ($expression->isOpen()) {
             $operators->push($expression);
@@ -88,7 +94,12 @@ class Math {
             }
         }
     }
- 
+ /**
+  * 
+  * @param TerminalExpression $expression Pass through expression terminal and check the precidence
+  * @param Stack $output List of operations to perform
+  * @param Stack $operators List of Operations to check
+  */
     protected function parseOperator(TerminalExpression $expression, Stack $output, Stack $operators) {
         $end = $operators->poke();
         if (!$end) {
@@ -108,7 +119,11 @@ class Math {
             $operators->push($expression);
         }
     }
- 
+ /**
+  * 
+  * @param type $string Expression as string
+  * @return Array Parts of string excluding operators
+  */
     protected function tokenize($string) {
         $parts = preg_split('((\d+|\+|-|\(|\)|\*|/)|\s+)', $string, null, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         $parts = array_map('trim', $parts);

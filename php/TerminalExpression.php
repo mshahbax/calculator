@@ -1,4 +1,7 @@
 <?php
+/**
+ * Termianal Classs behaves like a terminal where all elements passes through it.
+ */
 abstract class TerminalExpression {
  
     protected $value = '';
@@ -6,7 +9,12 @@ abstract class TerminalExpression {
     public function __construct($value) {
         $this->value = $value;
     }
- 
+ /**
+  * 
+  * @param TerminalExpression $value Operator
+  * @return \TerminalExpression|Number|\Addition|\Subtraction|\Multiplication|\Division|\Parenthesis Validations
+  * @throws Exception Throws exception if values is incorect or mismatched.
+  */
     public static function factory($value) {
         if (is_object($value) && $value instanceof TerminalExpression) {
             return $value;

@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Paranthesis Handling Class
+ */
 class Parenthesis extends TerminalExpression {
  
     protected $precidence = 6;

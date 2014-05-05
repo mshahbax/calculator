@@ -44,9 +44,6 @@ function process($post) {
             $math = new Math();
             $_SESSION['display'] = $math->evaluate($_SESSION['expression']);
             $_SESSION['expression'] = $_SESSION['display'];
-//            $result  = eval('return '.$_SESSION['expression'].';');
-//            $_SESSION['display'] = (!$result) ? "Syntax Error" : $result;
-//            $_SESSION['expression'] = $_SESSION['display'];
             break;
         case 'C':
             $_SESSION['expression'] = 0;
@@ -62,13 +59,6 @@ function process($post) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="bower_components/bootstrap/assets/js/html5shiv.js"></script>
-      <script src="bower_components/bootstrap/assets/js/respond.min.js"></script>
-    <![endif]-->
-    
     <link href="css/global.css" rel="stylesheet" media="screen">    
   </head>
   <body>
