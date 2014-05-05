@@ -1,21 +1,14 @@
 <?php
     require_once 'php/libs/Markdown/markdown.php';
     
- session_start();
- 
-$_SESSION['expression'] = (!isset($_SESSION['expression']) || $_SESSION['expression'] == '') ?  "" : $_SESSION['expression'];
-$display = (!isset($_SESSION['display']) || $_SESSION['display'] == '') ?  "0" : $_SESSION['display'];
-
-if(isset($_POST['button'])){
-    
-    process($_POST['button']);
-    $display = (!isset($_SESSION['display']) || $_SESSION['display'] == '') ?  "0" : $_SESSION['display'];
-}else{
-    unset($_SESSION['expression'],$_SESSION['display']);
-    $display = 0;
+$expression = "";
+$post_button = filter_input(INPUT_POST, 'button', FILTER_SANITIZE_SPECIAL_CHARS);
+$post_express = filter_input(INPUT_POST, 'expresion', FILTER_SANITIZE_SPECIAL_CHARS);
+if(isset($post_button)){
+    $expression = process($post_button, $post_express);
 }
 
-function process($post) {
+function process($post, $express) {
     switch ($post) {
         case '1':
         case '2':
@@ -31,25 +24,23 @@ function process($post) {
         case '-':
         case '/':
         case '*':
-            if($_SESSION['expression'] == '' && $post == 0){
-                $_SESSION['expression'] = '';
+            if($express == '' && $post == 0){
+                $express = '';
             }else{
-                $_SESSION['expression'] .= $post;
-                $_SESSION['display'] = $_SESSION['expression'];
+                $express .= $post;
             }
-            
             break;
         case '=':
             require_once 'php/Math.php';
             $math = new Math();
-            $_SESSION['display'] = $math->evaluate($_SESSION['expression']);
-            $_SESSION['expression'] = $_SESSION['display'];
+            $express = $math->evaluate($express);
             break;
         case 'C':
-            $_SESSION['expression'] = 0;
-            $_SESSION['display'] = 0;
+            $express = "";
             break;
     }
+    
+    return $express;
 }
 ?>
 <!DOCTYPE html>
@@ -71,7 +62,7 @@ function process($post) {
         <table class="calculator">
           <tr>
             <td colspan="5">
-              <input class="form-control" type="text" name="anzeige" value="<?= $display ?>" />
+              <input class="form-control" type="text" name="anzeige" value="<?= ($expression == "") ? "0":$expression ?>" />
             </td>
           </tr>
           <tr>
@@ -110,7 +101,7 @@ function process($post) {
             <td><input class="btn btn-sm btn-success" type="submit" value="=" name="button" /></td>
           </tr>
         </table>
-
+          <input type="hidden" name="expresion" value="<?=$expression; ?>">
       </form>
 
     </div>
