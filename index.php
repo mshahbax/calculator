@@ -31,9 +31,9 @@ function process($post, $express) {
             }
             break;
         case '=':
-            require_once 'php/Math.php';
-            $math = new Math();
-            $express = $math->evaluate($express);
+//            require_once 'php/Math.php';
+//            $math = new Math();
+//            $express = $math->evaluate($express);
             break;
         case 'C':
             $express = "";
